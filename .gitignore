@@ -1,10 +1,50 @@
-
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
+# Symfony
 /var/
 /vendor/
-###< symfony/framework-bundle ###
+/node_modules/
+/.env.local
+.env.*.local
+/public/bundles/
+/config/secrets/dev/
+/config/secrets/test/
+/config/secrets/prod/prod.decrypt.private.php
+
+# Logs y cachés
+*.log
+*.cache
+
+# Docker
+docker-compose.override.yml
+*.pid
+
+# PhpStorm / JetBrains IDEs
+.idea/
+*.iml
+
+# Archivos temporales y del sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.tmp
+*.sass-cache
+*.vscode/
+
+# Composer
+composer.lock
+
+# PHPUnit
+/phpunit.xml
+/phpunit.xml.dist
+
+# Tests
+/tests/tmp/
+
+# Archivos comprimidos o backups
+*.tgz
+*.gz
+*.zip
+
+# BBDD
+*.sql
+*.sqlite
