@@ -1,0 +1,42 @@
+services:
+  php:
+    image: php:8.2-fpm
+    container_name: galeria_php
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - db
+    networks:
+      - symfony
+
+  nginx:
+    image: nginx:alpine
+    container_name: galeria_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php
+    networks:
+      - symfony
+
+  db:
+    image: mysql:8.0
+    container_name: galeria_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: galeria
+      MYSQL_USER: galeria
+      MYSQL_PASSWORD: galeria
+    ports:
+      - "3306:3306"
+    networks:
+      - symfony
+
+networks:
+  symfony:
+    driver: bridge
+
