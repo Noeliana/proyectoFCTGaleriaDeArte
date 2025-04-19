@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio - Exposición Disney{% endblock %}
+
+{% block body %}
+    <section class="hero">
+        <div class="slider full-height">
+            <div class="slides">
+                <img src="{{ asset('images/slider/slider1.jpeg') }}" alt="Imagen destacada 1" class="slide active">
+                <img src="{{ asset('images/slider/slider2.jpeg') }}" alt="Imagen destacada 2" class="slide">
+                <img src="{{ asset('images/slider/slider3.jpeg') }}" alt="Imagen destacada 3" class="slide">
+            </div>
+            <button class="nav prev">&#10094;</button>
+            <button class="nav next">&#10095;</button>
+        </div>
+    </section>
+
+    <section class="preview-franchise">
+        <h2>Destacadas Disney</h2>
+        <div class="galeria">
+            <a href="{{ path('app_categoria', {'slug': 'disney-clasico'}) }}">
+                <img src="{{ asset('images/franchise/Disney clasico/rata.jpeg') }}" alt="Disney clásico">
+            </a>
+            <a href="{{ path('app_categoria', {'slug': 'marvel'}) }}">
+                <img src="{{ asset('images/franchise/Marvel/groot.jpeg') }}" alt="Marvel">
+            </a>
+            <a href="{{ path('app_categoria', {'slug': 'pixar'}) }}">
+                <img src="{{ asset('images/franchise/Pixar/coco.jpeg') }}" alt="Pixar">
+            </a>
+            <a href="{{ path('app_categoria', {'slug': 'disney-clasico'}) }}">
+                <img src="{{ asset('images/franchise/Disney clasico/sebas.jpeg') }}" alt="Disney clásico">
+            </a>
+            <a href="{{ path('app_categoria', {'slug': 'star-wars'}) }}">
+                <img src="{{ asset('images/franchise/Star wars/Mando-grogu.jpeg') }}" alt="Star Wars">
+            </a>
+            <a href="{{ path('app_categoria', {'slug': 'live-action'}) }}">
+                <img src="{{ asset('images/franchise/Live action/peter.jpeg') }}" alt="Live Action">
+            </a>
+        </div>
+    </section>
+
+
+    <section class="suscripcion">
+        <h2>¡No te pierdas nada!</h2>
+        <p>Suscríbete para recibir novedades de tus personajes favoritos.</p>
+        <form method="post" action="#">
+            <input type="email" name="email" placeholder="Tu correo electrónico" required>
+            <button type="submit">Suscribirme</button>
+        </form>
+    </section>
+
+{% endblock %}

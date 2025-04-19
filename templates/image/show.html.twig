@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Image{% endblock %}
+
+{% block body %}
+    <h1>Image</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ image.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ image.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ image.description }}</td>
+            </tr>
+            <tr>
+                <th>ImageFile</th>
+                <td>{{ image.imageFile }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ image.createdAt ? image.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Likes</th>
+                <td>{{ image.likes }}</td>
+            </tr>
+            <tr>
+                <th>IsFeatured</th>
+                <td>{{ image.isFeatured ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Etiquetas</th>
+                <td>
+                    {% for tag in image.tags %}
+                        <a href="{{ path('app_tag_show', {'slug': tag.slug}) }}">{{ tag.name }}</a>
+                        {% if not loop.last %}, {% endif %}
+                    {% else %}
+                        <span>Sin etiquetas</span>
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_image_index') }}">back to list</a>
+
+    <a href="{{ path('app_image_edit', {'id': image.id}) }}">edit</a>
+
+    {{ include('image/_delete_form.html.twig') }}
+{% endblock %}

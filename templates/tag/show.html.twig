@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Imágenes con la etiqueta "{{ tag.name }}"{% endblock %}
+
+{% block body %}
+    <h1>Etiqueta: {{ tag.name }}</h1>
+
+    {% if images is not empty %}
+        <div class="galeria">
+            {% for image in images %}
+                <div class="imagen-preview">
+                    <h3>{{ image.title }}</h3>
+                    <img src="{{ asset('uploads/images/' ~ image.imageFile) }}" alt="{{ image.title }}">
+                    <p>{{ image.description }}</p>
+                    <a href="{{ path('app_image_show', {'id': image.id}) }}">Ver más</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No hay imágenes asociadas a esta etiqueta.</p>
+    {% endif %}
+{% endblock %}

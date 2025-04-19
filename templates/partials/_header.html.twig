@@ -1,0 +1,49 @@
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <a href="{{ path('app_home') }}">
+                <img src="{{ asset('images/logoDisney.png') }}" alt="Logo Disney Expo" />
+            </a>
+        </div>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="menu-center">
+                <a href="{{ path('app_home') }}">Inicio</a>
+                <a href="{{ path('app_artista') }}">Artistas</a>
+
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle">Franquicias</a>
+                    <div class="dropdown-menu">
+                        <a href="{{ path('app_categoria', {'slug': 'disney-clasico'}) }}">Disney Clasico</a>
+                        <a href="{{ path('app_categoria', {'slug': 'marvel'}) }}">Marvel</a>
+                        <a href="{{ path('app_categoria', {'slug': 'star-wars'}) }}">Star Wars</a>
+                        <a href="{{ path('app_categoria', {'slug': 'pixar'}) }}">Pixar</a>
+                        <a href="{{ path('app_categoria', {'slug': 'live-action'}) }}">Live-Action</a>
+                    </div>
+                </div>
+
+                <a href="{{ path('app_video_index') }}">Videos</a>
+            </div>
+
+            <div class="right-zone">
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle">Perfil</a>
+                    <div class="dropdown-menu">
+                        <a href="{{ path('app_perfil') }}">Ver perfil</a>
+                        <a href="{{ path('app_logout') }}">Cerrar sesion</a>
+                    </div>
+                </div>
+
+                <form method="post" action="{{ path('app_change_language') }}" class="lang-form">
+                    <button type="submit" name="lang" value="es">ES</button>
+                    <button type="submit" name="lang" value="en">EN</button>
+                </form>
+            </div>
+        {% else %}
+            <nav class="menu">
+                <a href="{{ path('app_login') }}">Login</a>
+                <a href="{{ path('app_register') }}">Registro</a>
+            </nav>
+        {% endif %}
+    </div>
+</header>

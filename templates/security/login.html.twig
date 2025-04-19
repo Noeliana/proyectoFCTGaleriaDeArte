@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Iniciar sesión{% endblock %}
+{% block bodyClass %}login-page{% endblock %}
+
+{% block body %}
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="{{ asset('images/logoDisney.png') }}" alt="Logo Galería" />
+            </div>
+            <h2>Login</h2>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
+            <form method="post" class="login-form">
+                {% if error %}
+                    <div class="error-message">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="info-message">
+                        Estás logueado como {{ app.user.username }}, <a href="{{ path('app_logout') }}">Cerrar sesión</a>
+                    </div>
+                {% endif %}
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <label for="inputUsernameOrEmail">Usuario o Email</label>
+                <input type="text" value="{{ last_username }}" name="email" id="inputUsernameOrEmail" required autofocus placeholder="Usuario o Email">
+
+                <label for="inputPassword">Contraseña</label>
+                <input type="password" name="password" id="inputPassword" required placeholder="Contraseña">
+
+                <div class="remember-me">
+                    <input type="checkbox" name="_remember_me" id="remember">
+                    <label for="remember">Recordarme</label>
+                </div>
+
+                <button type="submit">Entrar</button>
+
+                <p class="link">
+                    <a href="">¿Olvidaste tu acceso?</a>
+                </p>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}
