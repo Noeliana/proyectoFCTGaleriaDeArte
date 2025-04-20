@@ -16,10 +16,12 @@ class Artist
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, length: 1000)]
     private ?string $bio = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -76,6 +78,18 @@ class Artist
 
         return $this;
     }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+        return $this;
+    }
+
 
     /**
      * @return Collection<int, Image>

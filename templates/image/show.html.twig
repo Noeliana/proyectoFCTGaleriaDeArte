@@ -1,57 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Image{% endblock %}
+{% block title %}{{ image.title }}{% endblock %}
 
 {% block body %}
-    <h1>Image</h1>
+    <section class="image-detail">
+        <div class="content-wrapper">
+            <!-- Imagen grande -->
+            <div class="image-left">
+                <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}" class="big-image" />
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ image.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ image.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ image.description }}</td>
-            </tr>
-            <tr>
-                <th>ImageFile</th>
-                <td>{{ image.imageFile }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ image.createdAt ? image.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Likes</th>
-                <td>{{ image.likes }}</td>
-            </tr>
-            <tr>
-                <th>IsFeatured</th>
-                <td>{{ image.isFeatured ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Etiquetas</th>
-                <td>
+                <!-- Botón like en forma de corazón -->
+                <form method="post" action="{{ path('app_image_like', {'id': image.id}) }}">
+                    <button class="like-btn">❤️ {{ image.likes }}</button>
+                </form>
+
+                <!-- Botón de descarga -->
+                <a href="{{ asset('images/obras/' ~ image.imageFile) }}" download class="download-btn">⬇ Descargar</a>
+            </div>
+
+            <!-- Detalles -->
+            <div class="info-right">
+                <h2>{{ image.title }}</h2>
+                <p><strong>Descripción:</strong> {{ image.description }}</p>
+                <p><strong>Creado el:</strong> {{ image.createdAt|date('Y-m-d H:i') }}</p>
+                <p><strong>Destacado:</strong> {{ image.isFeatured ? 'Sí' : 'No' }}</p>
+
+                <p><strong>Etiquetas:</strong>
                     {% for tag in image.tags %}
-                        <a href="{{ path('app_tag_show', {'slug': tag.slug}) }}">{{ tag.name }}</a>
-                        {% if not loop.last %}, {% endif %}
+                        <a href="{{ path('app_tag_show', {'slug': tag.slug}) }}">{{ tag.name }}</a>{{ not loop.last ? ', ' }}
                     {% else %}
                         <span>Sin etiquetas</span>
                     {% endfor %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                </p>
+            </div>
+        </div>
 
-    <a href="{{ path('app_image_index') }}">back to list</a>
+        <!-- Comentarios -->
+        <div class="comments-section">
+            <h3>🗨️ Comentarios</h3>
+            {% for comment in image.comments %}
+                <div class="comment-card">
+                    <strong>{{ comment.authorName }}</strong> -
+                    <small>{{ comment.createdAt|date('Y-m-d H:i') }}</small>
+                    <p>{{ comment.content }}</p>
+                </div>
+            {% else %}
+                <p>Aún no hay comentarios.</p>
+            {% endfor %}
 
-    <a href="{{ path('app_image_edit', {'id': image.id}) }}">edit</a>
+            <h3>Deja tu comentario</h3>
+            {{ form_start(commentForm, {'action': path('app_image_comment', {'id': image.id})}) }}
+            {{ form_row(commentForm.authorName) }}
+            {{ form_row(commentForm.content) }}
+            <button type="submit">Enviar</button>
+            {{ form_end(commentForm) }}
+        </div>
 
-    {{ include('image/_delete_form.html.twig') }}
+        <a href="{{ path('app_image_index') }}">← Volver</a>
+    </section>
 {% endblock %}

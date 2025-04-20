@@ -450,7 +450,7 @@ body {
     color: #f5f5f5;
     padding: 2rem 1rem;
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 .footer-content {
@@ -487,3 +487,153 @@ body {
     font-size: 0.9rem;
     color: #aaa;
 }
+/*ARTISTAS*/
+
+.artistas {
+    font-size: 2rem;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 5%;
+}
+.artistas h2{
+    text-align: center;
+    padding: 2rem;
+    font-family: 'WallDisplay', cursive;
+}
+
+.grid-artistas {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1rem;
+    justify-items: center;
+}
+
+.artist-card {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'WallDisplay', cursive;
+}
+.artist-card a{
+    text-decoration: none;
+}
+.circle-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.circle-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.perfil-artista {
+
+    margin-top: 10%;
+    text-align: center;
+}
+
+.perfil-artista img {
+    width: 200px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+.perfil-artista {
+    text-align: center;
+    padding: 2rem;
+}
+
+.foto-perfil {
+    width: 200px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.bio {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.galeria-obras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.galeria-obras img {
+    max-width: 250px;
+    height: 350px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/*3er nivel artistas*/
+.image-detail .content-wrapper {
+    display: flex;
+    gap: 2rem;
+    margin-top: 10%;
+
+    margin-bottom: 2rem;
+}
+
+.image-left {
+    flex: 1;
+    position: relative;
+    margin-left: 20%;
+}
+
+.image-left .big-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+.like-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    font-size: 1.8rem;
+    border: none;
+    cursor: pointer;
+}
+
+.download-btn {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #d62a2a;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.info-right {
+    flex: 2;
+}
+
+.comments-section {
+    margin-top: 2rem;
+    margin-left: 20%;
+}
+
+.comments-section textarea {
+    width: 100%;
+    height: 80px;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+.comment-card {
+    background-color: #f9f9f9;
+    border-left: 4px solid #ff69b4;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+}
+
+

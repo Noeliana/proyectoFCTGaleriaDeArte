@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250418100619 extends AbstractMigration
+final class Version20250420130832 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,6 +20,9 @@ final class Version20250418100619 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql(<<<'SQL'
+            CREATE TABLE artist (id INT AUTO_INCREMENT NOT NULL, image VARCHAR(255) DEFAULT NULL, name VARCHAR(255) NOT NULL, bio LONGTEXT NOT NULL, website VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
+        SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
@@ -34,6 +37,9 @@ final class Version20250418100619 extends AbstractMigration
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE tag_image (tag_id INT NOT NULL, image_id INT NOT NULL, INDEX IDX_E7D11D59BAD26311 (tag_id), INDEX IDX_E7D11D593DA5256D (image_id), PRIMARY KEY(tag_id, image_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
+        SQL);
+        $this->addSql(<<<'SQL'
+            CREATE TABLE `user` (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE video (id INT AUTO_INCREMENT NOT NULL, category_id INT DEFAULT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, video_file VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL COMMENT '(DC2Type:datetime_immutable)', INDEX IDX_7CC7DA2C12469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
@@ -80,6 +86,9 @@ final class Version20250418100619 extends AbstractMigration
             ALTER TABLE video DROP FOREIGN KEY FK_7CC7DA2C12469DE2
         SQL);
         $this->addSql(<<<'SQL'
+            DROP TABLE artist
+        SQL);
+        $this->addSql(<<<'SQL'
             DROP TABLE category
         SQL);
         $this->addSql(<<<'SQL'
@@ -93,6 +102,9 @@ final class Version20250418100619 extends AbstractMigration
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE tag_image
+        SQL);
+        $this->addSql(<<<'SQL'
+            DROP TABLE `user`
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE video
