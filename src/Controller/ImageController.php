@@ -45,13 +45,10 @@ final class ImageController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_image_show', methods: ['GET'])]
-    public function show(Image $image): Response
-    {
-        $form = $this->createForm(CommentType::class, new Comment());
+    public function show(Image $image): Response  {
 
         return $this->render('image/show.html.twig', [
             'image' => $image,
-            'commentForm' => $form,
         ]);
     }
 
@@ -84,31 +81,28 @@ final class ImageController extends AbstractController
         return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
     }
     #[Route('/image/{id}/like', name: 'app_image_like', methods: ['POST'])]
-    public function like(Image $image, EntityManagerInterface $entityManager): Response
+    public function like(Image $image, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $likes = $image->getLikes() ?? 0;
-        $image->setLikes($likes + 1);
+        $session = $request->getSession();
+        $likedImages = $session->get('liked_images', []);
+
+        $imageId = $image->getId();
+
+        if (in_array($imageId, $likedImages)) {
+            $image->setLikes(max(0, $image->getLikes() - 1));
+            $likedImages = array_diff($likedImages, [$imageId]);
+        } else {
+            $image->setLikes($image->getLikes() + 1);
+            $likedImages[] = $imageId;
+        }
+
+        $session->set('liked_images', $likedImages);
 
         $entityManager->persist($image);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_image_show', ['id' => $image->getId()]);
+        return $this->redirectToRoute('app_image_show', ['id' => $imageId]);
     }
-    #[Route('/image/{id}/comment', name: 'app_image_comment', methods: ['POST'])]
-    public function comment(Request $request, Image $image, EntityManagerInterface $entityManager): Response
-    {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setImage($image);
-            $comment->setCreatedAt(new \DateTimeImmutable());
 
-            $entityManager->persist($comment);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_image_show', ['id' => $image->getId()]);
-    }
 }

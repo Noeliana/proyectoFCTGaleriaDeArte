@@ -9,16 +9,19 @@
             <div class="image-left">
                 <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}" class="big-image" />
 
-                <!-- Botón like en forma de corazón -->
+                {% set likedImages = app.session.get('liked_images', []) %}
+                {% set isLiked = image.id in likedImages %}
+
                 <form method="post" action="{{ path('app_image_like', {'id': image.id}) }}">
-                    <button class="like-btn">❤️ {{ image.likes }}</button>
+                    <button class="like-btn">
+                        {{ isLiked ? '❤️' : '🤍' }} {{ image.likes }}
+                    </button>
                 </form>
 
-                <!-- Botón de descarga -->
+
                 <a href="{{ asset('images/obras/' ~ image.imageFile) }}" download class="download-btn">⬇ Descargar</a>
             </div>
 
-            <!-- Detalles -->
             <div class="info-right">
                 <h2>{{ image.title }}</h2>
                 <p><strong>Descripción:</strong> {{ image.description }}</p>
@@ -32,30 +35,9 @@
                         <span>Sin etiquetas</span>
                     {% endfor %}
                 </p>
+
             </div>
         </div>
-
-        <!-- Comentarios -->
-        <div class="comments-section">
-            <h3>🗨️ Comentarios</h3>
-            {% for comment in image.comments %}
-                <div class="comment-card">
-                    <strong>{{ comment.authorName }}</strong> -
-                    <small>{{ comment.createdAt|date('Y-m-d H:i') }}</small>
-                    <p>{{ comment.content }}</p>
-                </div>
-            {% else %}
-                <p>Aún no hay comentarios.</p>
-            {% endfor %}
-
-            <h3>Deja tu comentario</h3>
-            {{ form_start(commentForm, {'action': path('app_image_comment', {'id': image.id})}) }}
-            {{ form_row(commentForm.authorName) }}
-            {{ form_row(commentForm.content) }}
-            <button type="submit">Enviar</button>
-            {{ form_end(commentForm) }}
-        </div>
-
         <a href="{{ path('app_image_index') }}">← Volver</a>
     </section>
 {% endblock %}
