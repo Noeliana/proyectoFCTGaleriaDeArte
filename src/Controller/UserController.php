@@ -18,10 +18,10 @@ final class UserController extends AbstractController
     #[Route('/perfil', name: 'app_perfil')]
     public function perfil(): Response
     {
-        $user = $this->getUser();
+        $username = $this->getUser();
 
         return $this->render('user/perfil.html.twig', [
-            'user' => $user,
+            'user' => $username,
         ]);
     }
 

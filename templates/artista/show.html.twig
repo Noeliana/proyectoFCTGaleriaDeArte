@@ -5,18 +5,20 @@
 {% block body %}
     <section class="perfil-artista">
         <h2>{{ artist.name }}</h2>
-
         <div class="perfil-contenido">
             <img src="{{ asset('images/artists/' ~ artist.id ~ '.jpeg') }}" alt="{{ artist.name }}">
             <p><strong>Biografía:</strong> {{ artist.bio }}</p>
         </div>
-
         {% if artist.images is not empty %}
             <h3>Obras de {{ artist.name }}</h3>
             <div class="galeria-obras">
                 {% for image in artist.images %}
-                    <a href="{{ path('app_image_show', { id: image.id }) }}">
-                        <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="Imagen de {{ artist.name }}">
+                    <a href="{{ path('app_image_show', {
+                        'id': image.id,
+                        'from': 'artist'
+                    }) }}">
+
+                    <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="Imagen de {{ artist.name }}">
                     </a>
                 {% endfor %}
             </div>

@@ -44,11 +44,19 @@ final class ImageController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}', name: 'app_image_show', methods: ['GET'])]
-    public function show(Image $image): Response  {
+    public function show(Request $request, Image $image): Response
+    {
+        $from = $request->query->get('from');
+        $slug = $request->query->get('slug');
+        $artist = $image->getArtist();
 
         return $this->render('image/show.html.twig', [
             'image' => $image,
+            'from' => $from,
+            'slug' => $slug,
+            'artist' => $artist,
         ]);
     }
 
