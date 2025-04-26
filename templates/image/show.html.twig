@@ -38,6 +38,12 @@
 
             </div>
         </div>
-        <a href="{{ path('app_image_index') }}">← Volver</a>
+        {% if from == 'artist' %}
+            <a href="{{ path('app_artista_show', {'id': artist.id}) }}" class="return-btn">← Volver al artista</a>
+        {% elseif from == 'category' %}
+            <a href="{{ path('app_categoria_show', {'slug': slug}) }}" class="return-btn">← Volver a la categoría</a>
+        {% else %}
+            <a href="{{ path('app_image_index') }}" class="return-btn">← Volver</a>
+        {% endif %}
     </section>
 {% endblock %}
