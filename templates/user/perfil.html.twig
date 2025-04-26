@@ -1,9 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Perfil{% endblock %}
+{% block title %}Mi Perfil Mágico{% endblock %}
 
 {% block body %}
-    <h1>Mi Perfil</h1>
-    <p><strong>Usuario:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
+    <section class="disney-profile">
+        <div class="profile-card-disney">
+            <img src="{{ asset('images/profile-default.png') }}" alt="Foto de perfil" class="profile-image-disney">
+
+            <h2 class="profile-name-disney">¡Hola, {{ user.username }}!</h2>
+
+            <div class="profile-info-disney">
+                <p>✉️ <strong>Email:</strong> {{ user.email }}</p>
+                <p>🎖️ <strong>Rol:</strong> {{ user.roles[0]|default('Usuario Mágico') }}</p>
+            </div>
+
+            <a href="{{ path('app_home') }}" class="btn-back-disney">🏰 Volver al Castillo</a>
+        </div>
+    </section>
 {% endblock %}

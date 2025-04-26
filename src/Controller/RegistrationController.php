@@ -23,13 +23,32 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Hashear la contraseña primero
             $plainPassword = $form->get('plainPassword')->getData();
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
+            // Obtener el email
+            $email = $user->getEmail();
+
+            // Crear el username base
+            $baseUsername = explode('@', $email)[0];
+            $finalUsername = $baseUsername;
+            $counter = 1;
+
+            // Buscar si el username ya existe
+            while ($entityManager->getRepository(User::class)->findOneBy(['username' => $finalUsername])) {
+                $finalUsername = $baseUsername . $counter;
+                $counter++;
+            }
+
+            // Establecer el username único
+            $user->setUsername($finalUsername);
+
+            // Guardar el usuario
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', '¡Registro exitoso! Ahora puedes iniciar sesión.');
+            $this->addFlash('success', '¡Registro exitoso! Tu nombre mágico es: ' . $finalUsername . ' ✨');
 
             return $this->redirectToRoute('app_login');
         }
@@ -38,5 +57,7 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form,
         ]);
     }
+
+
 }
 
