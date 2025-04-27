@@ -12,7 +12,7 @@
                 {% set likedImages = app.session.get('liked_images', []) %}
                 {% set isLiked = image.id in likedImages %}
 
-                <form method="post" action="{{ path('app_image_like', {'id': image.id}) }}">
+                <form method="post" action="{{ path('app_image_like', {'id': image.id }) }}">
                     <button class="like-btn">
                         {{ isLiked ? '❤️' : '🤍' }} {{ image.likes }}
                     </button>
@@ -42,8 +42,6 @@
             <a href="{{ path('app_artista_show', {'id': artist.id}) }}" class="return-btn">← Volver al artista</a>
         {% elseif from == 'category' %}
             <a href="{{ path('app_categoria_show', {'slug': slug}) }}" class="return-btn">← Volver a la categoría</a>
-        {% else %}
-            <a href="{{ path('app_image_index') }}" class="return-btn">← Volver</a>
         {% endif %}
     </section>
 {% endblock %}

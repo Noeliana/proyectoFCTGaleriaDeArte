@@ -17,12 +17,33 @@
                             'from': 'category',
                             'slug': category.slug
                         }) }}">
-
-                        <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}">
+                            <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}">
                         </a>
                         <p>{{ image.title }}</p>
+
+                        {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+                            {% if image.owner == app.user %}
+                                <div class="acciones-imagen">
+                                    <a href="{{ path('app_image_edit', {id: image.id}) }}" class="btn">Editar</a>
+                                    <form method="post" action="{{ path('app_image_delete', {'id': image.id}) }}" onclick="return confirm('¿Seguro que quieres eliminar esta imagen?')">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
+                                        <input type="hidden" name="slug" value="{{ category.slug }}">
+                                        <button class="btn">Eliminar</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 {% endfor %}
+
+                {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+                    <div class="imagen-item add-new-image">
+                        <a href="{{ path('app_image_new', {'categoryId': category.id}) }}">
+                            <div class="plus-sign">+</div>
+                            <p>Añadir Imagen</p>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
     </section>

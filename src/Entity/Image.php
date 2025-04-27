@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
@@ -37,6 +38,20 @@ class Image
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Category $category = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $owner = null;
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+// Setter
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
+        return $this;
+    }
     /**
      * @var Collection<int, Tag>
      */
