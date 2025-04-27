@@ -457,9 +457,9 @@ body {
 .footer-content {
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
+    flex: 1;
 }
 
 .footer-logo img {
@@ -752,6 +752,92 @@ body {
         transform: translateY(-10px);
     }
 }
+
+/*Tarjeta mas*/
+
+.add-new-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #aaa;
+    height: 250px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-new-image:hover {
+    background-color: #f0f0f0;
+}
+
+.plus-sign {
+    font-size: 5rem;
+    color: #777;
+}
+/*FORMULARIO FORM*/
+.form-magico {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.campo-formulario {
+    margin-bottom: 1.5rem;
+}
+
+.input-con-icono {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.input-con-icono .icono {
+    font-size: 1.5rem;
+    margin-right: 0.8rem;
+    color: #666;
+}
+
+.input-con-icono input,
+.input-con-icono select,
+.input-con-icono textarea {
+    border: none;
+    outline: none;
+    width: 100%;
+    background: transparent;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+button.btn {
+    background: #7adf7a;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.btn{
+    background: #6696ef;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+}
+
+button.btn:hover {
+    background-color: #3f51b5;
+}
+
 
 
 

@@ -4,7 +4,7 @@
 
 {% block body %}
     <section class="artistas">
-        <h2>Artistas</h2>
+        <h2>Artistas Oficiales</h2>
 
         {% if artists is empty %}
             <p>No hay artistas registrados todavía.</p>
@@ -17,6 +17,25 @@
                                 <img src="{{ asset('images/artists/' ~ artist.id ~ '.jpeg') }}" alt="{{ artist.name }}">
                             </div>
                             <p>{{ artist.name }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h2>Artistas de la Comunidad</h2>
+
+        {% if user_artists is empty %}
+            <p>No hay usuarios creadores todavía.</p>
+        {% else %}
+            <div class="grid-artistas">
+                {% for user in user_artists %}
+                    <div class="artist-card">
+                        <a href="{{ path('app_user_show', {'id': user.id}) }}">
+                            <div class="circle-img">
+                                <img src="{{ asset('images/profile-default.png') }}" alt="{{ user.username }}">
+                            </div>
+                            <p>{{ user.username }}</p>
                         </a>
                     </div>
                 {% endfor %}
