@@ -37,10 +37,10 @@
                 {% endfor %}
 
                 {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
-                    <div class="imagen-item add-new-image">
+                    <div class="card-new-image">
                         <a href="{{ path('app_image_new', {'categoryId': category.id}) }}">
                             <div class="plus-sign">+</div>
-                            <p>Añadir Imagen</p>
+                            <p>Add image</p>
                         </a>
                     </div>
                 {% endif %}

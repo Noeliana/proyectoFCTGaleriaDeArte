@@ -118,7 +118,6 @@ final class ImageController extends AbstractController
         }
 
         if (!$slug) {
-            // Opcional: si no encuentra slug, redirigir a página principal
             return $this->redirectToRoute('app_home');
         }
 
@@ -149,7 +148,12 @@ final class ImageController extends AbstractController
         $entityManager->persist($image);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_image_show', ['id' => $imageId]);
+        return $this->redirectToRoute('app_image_show', [
+            'id' => $imageId,
+            'from' => $request->query->get('from'),
+            'slug' => $request->query->get('slug')
+        ]);
+
     }
 
 }

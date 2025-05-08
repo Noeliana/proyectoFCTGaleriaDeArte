@@ -24,13 +24,19 @@ class Artist
     #[ORM\Column(type: Types::TEXT, length: 1000)]
     private ?string $bio = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $website = null;
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: true)]
+    private ?Artist $artist = null;
 
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'artist')]
+    #[ORM\OneToMany(
+        targetEntity: Image::class,
+        mappedBy: 'artist',
+        cascade: ['remove'],
+        orphanRemoval: true
+    )]
     private Collection $images;
 
     public function __construct()
@@ -63,18 +69,6 @@ class Artist
     public function setBio(string $bio): static
     {
         $this->bio = $bio;
-
-        return $this;
-    }
-
-    public function getWebsite(): ?string
-    {
-        return $this->website;
-    }
-
-    public function setWebsite(?string $website): static
-    {
-        $this->website = $website;
 
         return $this;
     }

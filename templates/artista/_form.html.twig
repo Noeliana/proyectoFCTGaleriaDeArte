@@ -1,0 +1,30 @@
+{{ form_start(form, {
+    'attr': {
+        'class': 'form-artist',
+        'enctype': 'multipart/form-data'
+    }
+}) }}
+
+
+<div class="campo-formulario">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+</div>
+
+<div class="campo-formulario">
+    {{ form_label(form.bio) }}
+    {{ form_widget(form.bio) }}
+</div>
+
+<div class="campo-formulario">
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image, {'attr': {'onchange': 'previewImage(event)'}}) }}
+</div>
+
+<div id="preview-container">
+    <img id="preview-image" src="#" alt="Vista previa" style="display:none; max-width: 200px;" />
+</div>
+
+<button class="btn">Guardar</button>
+
+{{ form_end(form) }}

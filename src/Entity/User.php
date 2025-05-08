@@ -26,8 +26,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $username = null;
 
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'owner')]
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Image::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $images;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();

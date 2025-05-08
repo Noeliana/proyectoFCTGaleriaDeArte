@@ -12,8 +12,14 @@
                 {% set likedImages = app.session.get('liked_images', []) %}
                 {% set isLiked = image.id in likedImages %}
 
-                <form method="post" action="{{ path('app_image_like', {'id': image.id }) }}">
-                    <button class="like-btn">
+                <form method="post" action="{{ path('app_image_like', {
+                    'id': image.id,
+                    'from': from,
+                    'slug': slug
+                }) }}">
+
+
+                <button class="like-btn">
                         {{ isLiked ? '❤️' : '🤍' }} {{ image.likes }}
                     </button>
                 </form>
