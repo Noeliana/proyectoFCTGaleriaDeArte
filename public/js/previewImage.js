@@ -1,4 +1,3 @@
-
     function previewImage(event) {
     const input = event.target;
     const previewContainer = document.getElementById('preview-container');

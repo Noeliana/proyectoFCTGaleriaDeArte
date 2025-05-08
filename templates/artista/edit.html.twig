@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar {{ artist.name }}{% endblock %}
+
+{% block body %}
+    <section class="edit-artist-section">
+        <h1>Editar Artista</h1>
+
+        {{ form_start(form, {
+            'attr': {
+                'enctype': 'multipart/form-data',
+                'onsubmit': 'return confirm("¿Guardar los cambios?");'
+            }
+        }) }}
+
+        <div class="campo-formulario">
+            {{ form_label(form.name, 'Nombre del artista') }}
+            {{ form_widget(form.name) }}
+        </div>
+
+        <div class="campo-formulario">
+            {{ form_label(form.bio, 'Biografía') }}
+            {{ form_widget(form.bio) }}
+        </div>
+
+        <div class="campo-formulario">
+            {{ form_label(form.image, 'Imagen') }}
+            {{ form_widget(form.image, {'attr': {'onchange': 'previewImage(event)'}}) }}
+        </div>
+
+        <div id="preview-container">
+            {% if artist.image %}
+                <img id="preview-image" src="{{ asset('images/artists/' ~ artist.image) }}" alt="Vista previa" style="max-width: 200px;" />
+            {% else %}
+                <img id="preview-image" src="#" alt="Vista previa" style="display:none; max-width: 200px;" />
+            {% endif %}
+        </div>
+
+        <button class="btn btn-primary">Guardar</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_artista_show', {'id': artist.id}) }}" class="btn btn-secondary">← Volver</a>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/previewImage.js') }}"></script>
+{% endblock %}

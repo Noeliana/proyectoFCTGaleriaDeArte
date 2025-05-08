@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Artista{% endblock %}
+
+{% block body %}
+    <h1>Create new Artist</h1>
+    {{ include('artista/_form.html.twig') }}
+
+    <a href="{{ path('app_artista') }}" class="back">← Volver</a>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/previewImage.js') }}"></script>
+{% endblock %}

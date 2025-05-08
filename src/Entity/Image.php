@@ -38,9 +38,10 @@ class Image
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: true)]
     private ?User $owner = null;
+
     public function getOwner(): ?User
     {
         return $this->owner;
