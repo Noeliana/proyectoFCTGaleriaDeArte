@@ -4,42 +4,46 @@
 
 {% block body %}
     <section class="edit-artist-section">
-        <h1>Editar Artista</h1>
+        <div class="form-container">
+            <h1>Editar Artista</h1>
 
-        {{ form_start(form, {
-            'attr': {
-                'enctype': 'multipart/form-data',
-                'onsubmit': 'return confirm("¿Guardar los cambios?");'
-            }
-        }) }}
+            {{ form_start(form, {
+                'attr': {
+                    'enctype': 'multipart/form-data',
+                    'onsubmit': 'return confirm("¿Guardar los cambios?");'
+                }
+            }) }}
 
-        <div class="campo-formulario">
-            {{ form_label(form.name, 'Nombre del artista') }}
-            {{ form_widget(form.name) }}
+            <div class="form-group">
+                {{ form_label(form.name, 'Nombre del artista') }}
+                {{ form_widget(form.name, {'attr': {'class': 'input'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.bio, 'Biografía') }}
+                {{ form_widget(form.bio, {'attr': {'class': 'textarea'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.image, 'Imagen') }}
+                {{ form_widget(form.image, {'attr': {'onchange': 'previewImage(event)'}}) }}
+            </div>
+
+            <div id="preview-container">
+                {% if artist.image %}
+                    <img id="preview-image" src="{{ asset('images/artists/' ~ artist.image) }}" alt="Vista previa" />
+                {% else %}
+                    <img id="preview-image" src="#" alt="Vista previa" style="display: none;" />
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button class="btn save-btn">Guardar</button>
+                <a href="{{ path('app_artista_show', {'id': artist.id}) }}" class="btn back-btn">← Volver</a>
+            </div>
+
+            {{ form_end(form) }}
         </div>
-
-        <div class="campo-formulario">
-            {{ form_label(form.bio, 'Biografía') }}
-            {{ form_widget(form.bio) }}
-        </div>
-
-        <div class="campo-formulario">
-            {{ form_label(form.image, 'Imagen') }}
-            {{ form_widget(form.image, {'attr': {'onchange': 'previewImage(event)'}}) }}
-        </div>
-
-        <div id="preview-container">
-            {% if artist.image %}
-                <img id="preview-image" src="{{ asset('images/artists/' ~ artist.image) }}" alt="Vista previa" style="max-width: 200px;" />
-            {% else %}
-                <img id="preview-image" src="#" alt="Vista previa" style="display:none; max-width: 200px;" />
-            {% endif %}
-        </div>
-
-        <button class="btn btn-primary">Guardar</button>
-        {{ form_end(form) }}
-
-        <a href="{{ path('app_artista_show', {'id': artist.id}) }}" class="btn btn-secondary">← Volver</a>
     </section>
 {% endblock %}
 

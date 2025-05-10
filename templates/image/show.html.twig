@@ -5,7 +5,6 @@
 {% block body %}
     <section class="image-detail">
         <div class="content-wrapper">
-            <!-- Imagen grande -->
             <div class="image-left">
                 <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}" class="big-image" />
 
@@ -17,14 +16,10 @@
                     'from': from,
                     'slug': slug
                 }) }}">
-
-
                 <button class="like-btn">
                         {{ isLiked ? '❤️' : '🤍' }} {{ image.likes }}
                     </button>
                 </form>
-
-
                 <a href="{{ asset('images/obras/' ~ image.imageFile) }}" download class="download-btn">⬇ Descargar</a>
             </div>
 
@@ -44,10 +39,16 @@
 
             </div>
         </div>
-        {% if from == 'artist' %}
-            <a href="{{ path('app_artista_show', {'id': artist.id}) }}" class="return-btn">← Volver al artista</a>
-        {% elseif from == 'category' %}
-            <a href="{{ path('app_categoria_show', {'slug': slug}) }}" class="return-btn">← Volver a la categoría</a>
-        {% endif %}
+        <div class="return-container">
+            {% if from == 'artist' and artist is defined %}
+                <a href="{{ path('app_artista_show', {'id': artist.id}) }}" class="return-btn">← Volver al artista</a>
+            {% elseif from == 'category' and slug is not empty %}
+                <a href="{{ path('app_categoria_show', {'slug': slug}) }}" class="return-btn">← Volver a la categoría</a>
+            {% elseif from == 'subcategoria' and slug is not empty %}
+                <a href="{{ path('app_subcategoria_show', {'id': slug}) }}" class="return-btn">← Volver a la subcategoría</a>
+            {% else %}
+                <a href="{{ path('app_home') }}" class="return-btn">← Volver al inicio</a>
+            {% endif %}
+        </div>
     </section>
 {% endblock %}

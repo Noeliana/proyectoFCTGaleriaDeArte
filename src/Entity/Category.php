@@ -6,6 +6,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Subcategory;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
@@ -32,6 +33,9 @@ class Category
      */
     #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'category')]
     private Collection $videos;
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Subcategory::class)]
+    private Collection $subCategories;
+
 
     public function __construct()
     {
@@ -139,4 +143,9 @@ class Category
 
         return $this;
     }
+    public function getSubcategories(): Collection
+    {
+        return $this->subCategories;
+    }
+
 }

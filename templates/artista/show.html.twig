@@ -27,17 +27,17 @@
         {% endif %}
     </section>
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('app_artista_edit', {'id': artist.id}) }}" class="btn-admin-action btn-edit">
-            ✏️ Editar artista
-        </a>
-
-        <form method="post" action="{{ path('app_artista_delete', {'id': artist.id}) }}"
-              onsubmit="return confirm('¿Estás seguro de que quieres eliminar este artista?');"
-              style="display:inline-block;">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
-            <button class="btn-admin-action btn-delete">🗑️ Eliminar artista</button>
-        </form>
+        <div class="admin-buttons">
+            <a href="{{ path('app_artista_edit', {'id': artist.id}) }}" class="btn-admin-action btn-edit">
+                ✏️ Editar artista
+            </a>
+            <form method="post" action="{{ path('app_artista_delete', {'id': artist.id}) }}"
+                  onsubmit="return confirm('¿Estás seguro de que quieres eliminar este artista?');"
+                  style="display:inline-block;">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
+                <button class="btn-admin-action btn-delete">🗑️ Eliminar artista</button>
+            </form>
+        </div>
     {% endif %}
-
 
 {% endblock %}

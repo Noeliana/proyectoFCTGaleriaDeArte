@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Subcategory;
 use App\Repository\ImageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -42,6 +42,8 @@ class Image
     #[ORM\JoinColumn(nullable: true)]
     private ?User $owner = null;
 
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    private ?subcategory $subCategory = null;
     public function getOwner(): ?User
     {
         return $this->owner;
@@ -194,4 +196,15 @@ class Image
 
         return $this;
     }
+    public function getSubCategory(): ?Subcategory
+    {
+        return $this->subCategory;
+    }
+
+    public function setSubCategory(?Subcategory $subCategory): static
+    {
+        $this->subCategory = $subCategory;
+        return $this;
+    }
+
 }

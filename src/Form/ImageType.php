@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Artist;
 use App\Entity\Category;
 use App\Entity\Image;
+use App\Entity\Subcategory;
 use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -40,6 +41,11 @@ class ImageType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
+            ])
+            ->add('subCategory', EntityType::class, [
+                'class' => SubCategory::class,
+                'choice_label' => 'name',
+                'label' => 'Subcategoría',
             ])
         ;
     }
