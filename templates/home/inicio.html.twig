@@ -18,28 +18,13 @@
     <section class="preview-franchise">
         <h2>Destacadas Disney</h2>
         <div class="galeria">
-            <a href="{{ path('app_categoria_show', {'slug': 'disney-clasico'}) }}">
-                <img src="{{ asset('images/franchise/Disney clasico/rata.jpeg') }}" alt="Disney clásico">
-            </a>
-            <a href="{{ path('app_categoria_show', {'slug': 'marvel'}) }}">
-                <img src="{{ asset('images/franchise/Marvel/groot.jpeg') }}" alt="Marvel">
-            </a>
-            <a href="{{ path('app_categoria_show', {'slug': 'pixar'}) }}">
-                <img src="{{ asset('images/franchise/Pixar/coco.jpeg') }}" alt="Pixar">
-            </a>
-            <a href="{{ path('app_categoria_show', {'slug': 'disney-clasico'}) }}">
-                <img src="{{ asset('images/franchise/Disney clasico/sebas.jpeg') }}" alt="Disney clásico">
-            </a>
-            <a href="{{ path('app_categoria_show', {'slug': 'star-wars'}) }}">
-                <img src="{{ asset('images/franchise/Star wars/Mando-grogu.jpeg') }}" alt="Star Wars">
-            </a>
-            <a href="{{ path('app_categoria_show', {'slug': 'live-action'}) }}">
-                <img src="{{ asset('images/franchise/Live action/peter.jpeg') }}" alt="Live Action">
-            </a>
+            {% for image in topImages %}
+                <a href="{{ path('app_image_show', {'id': image.id}) }}">
+                    <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}">
+                </a>
+            {% endfor %}
         </div>
     </section>
-
-
     <section class="suscripcion">
         <h2>¡No te pierdas nada!</h2>
         <p>Suscríbete para recibir novedades de tus personajes favoritos.</p>

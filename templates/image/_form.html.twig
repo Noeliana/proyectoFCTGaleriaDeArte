@@ -1,62 +1,62 @@
 {{ form_start(form, {'attr': {'class': 'form-magico'}}) }}
-
-<div class="campo-formulario">
-    <label>{{ form_label(form.title) }}</label>
-    <div class="input-con-icono">
-        <span class="icono">🎨</span>
-        {{ form_widget(form.title) }}
-    </div>
-</div>
-
-<div class="campo-formulario">
-    <label>{{ form_label(form.description) }}</label>
-    <div class="input-con-icono">
-        <span class="icono">📝</span>
-        {{ form_widget(form.description) }}
-    </div>
-</div>
-
-<div class="campo-formulario">
-    <label>{{ form_label(form.imageFile) }}</label>
-    <div class="input-con-icono">
-        <span class="icono">📁</span>
-        {{ form_widget(form.imageFile, {'attr': {'onchange': 'previewImage(event)'}}) }}
-    </div>
-</div>
-
-<div id="preview-container" style="text-align: center; margin-top: 1rem;">
-    <img id="preview-image" src="#" alt="Vista previa" style="display: none; max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.2);">
-</div>
-
-
-<div class="campo-formulario">
-    <label>{{ form_label(form.category) }}</label>
-    <div class="input-con-icono">
-        <span class="icono">📂</span>
-        {{ form_widget(form.category) }}
-    </div>
-</div>
-
-{% if form.artist is defined %}
+<div class="form-row">
     <div class="campo-formulario">
-        <label>{{ form_label(form.artist) }}</label>
+        <label>{{ form_label(form.title) }}</label>
         <div class="input-con-icono">
-            <span class="icono">🎭</span>
-            {{ form_widget(form.artist) }}
+            <span class="icono">🎨</span>
+            {{ form_widget(form.title) }}
         </div>
     </div>
-{% endif %}
 
-{% if form.tags is defined %}
     <div class="campo-formulario">
-        <label>{{ form_label(form.tags) }}</label>
+        <label>{{ form_label(form.description) }}</label>
         <div class="input-con-icono">
-            <span class="icono">🏷️</span>
-            {{ form_widget(form.tags) }}
+            <span class="icono">📝</span>
+            {{ form_widget(form.description) }}
         </div>
     </div>
-{% endif %}
+</div>
 
-<button class="btn">{{ button_label|default('Guardar') }}</button>
+<div class="form-row">
+    <div class="campo-formulario">
+        <label>{{ form_label(form.imageFile) }}</label>
+        <div class="input-con-icono">
+            <span class="icono">📁</span>
+            {{ form_widget(form.imageFile) }}
+        </div>
+    </div>
 
+    <div class="campo-formulario">
+        <label>{{ form_label(form.category) }}</label>
+        <div class="input-con-icono">
+            <span class="icono">📂</span>
+            {{ form_widget(form.category) }}
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    {% if form.artist is defined %}
+        <div class="campo-formulario">
+            <label>{{ form_label(form.artist) }}</label>
+            <div class="input-con-icono">
+                <span class="icono">🎭</span>
+                {{ form_widget(form.artist) }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if form.tags is defined %}
+        <div class="campo-formulario">
+            <label>{{ form_label(form.tags) }}</label>
+            <div class="input-con-icono">
+                <span class="icono">🏷️</span>
+                {{ form_widget(form.tags) }}
+            </div>
+        </div>
+    {% endif %}
+</div>
+<div class="form-row solo-boton">
+    <button class="btn">{{ button_label|default('Guardar') }}</button>
+</div>
 {{ form_end(form) }}

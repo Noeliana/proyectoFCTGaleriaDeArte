@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.name }} - Subcategorías{% endblock %}
+
+{% block body %}
+    <section class="subcategorias-section">
+        <h2>{{ category.name }}</h2>
+
+        {% if subcategories is empty %}
+            <p>No hay subcategorías definidas para esta categoría.</p>
+        {% else %}
+            <div class="grid-subcategorias">
+                {% for sub in subcategories %}
+                    <div class="card-subcategoria">
+                        <a href="{{ path('app_subcategoria_show', {id: sub.id}) }}">
+                            <img src="{{ asset('images/subcategories/' ~ sub.id ~ '.jpeg') }}" alt="{{ sub.name }}">
+                            <h3>{{ sub.name }}</h3>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

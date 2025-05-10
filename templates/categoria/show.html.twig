@@ -4,7 +4,13 @@
 
 {% block body %}
     <section class="categoria">
-        <h2>{{ category.name }}</h2>
+        <h2>
+            {% if subcategoria is defined %}
+                {{ subcategoria.name }}
+            {% else %}
+                {{ category.name }}
+            {% endif %}
+        </h2>
 
         {% if images is empty %}
             <p>No hay imágenes para esta categoría todavía.</p>
@@ -12,12 +18,11 @@
             <div class="galeria-imagenes">
                 {% for image in images %}
                     <div class="imagen-item">
-                        <a href="{{ path('app_image_show', {
-                            'id': image.id,
-                            'from': 'category',
-                            'slug': category.slug
-                        }) }}">
-                            <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}">
+                        <a href="{{ path('app_image_show', {'id': image.id}) ~
+                        '?from=' ~ (subcategoria is defined ? 'subcategoria' : 'category') ~
+                        '&slug=' ~ (subcategoria is defined ? subcategoria.id : category.slug) }}">
+
+                        <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}">
                         </a>
                         <p>{{ image.title }}</p>
 

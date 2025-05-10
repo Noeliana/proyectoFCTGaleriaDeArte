@@ -5,10 +5,23 @@
     font-style: normal;
 }
 
+main {
+    flex: 1;
+}
+
 body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     font-family: 'Arial', sans-serif;
     padding-top: 80px;
+    background: linear-gradient(to bottom, #fff8f0, #ed9db2);
+}
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .header {
@@ -449,9 +462,9 @@ body {
 .footer {
     background: #1a1a1a;
     color: #f5f5f5;
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
     text-align: center;
-    margin-top: 3rem;
+
 }
 
 .footer-content {
@@ -494,7 +507,7 @@ body {
     font-size: 2rem;
     text-align: center;
     padding: 2rem;
-    margin-top: 5%;
+    margin-top: 2rem;
 }
 .artistas h2{
     text-align: center;
@@ -536,10 +549,10 @@ body {
     object-fit: cover;
 }
 .perfil-artista {
-
-    margin-top: 10%;
+    margin-top: 2rem;
     text-align: center;
 }
+
 
 .perfil-artista img {
     width: 200px;
@@ -580,10 +593,10 @@ body {
 .image-detail .content-wrapper {
     display: flex;
     gap: 2rem;
-    margin-top: 10%;
-
+    margin-top: 8rem;
     margin-bottom: 2rem;
 }
+
 
 .image-left {
     flex: 1;
@@ -631,11 +644,16 @@ body {
     padding: 0.5rem 1rem;
     margin-left: 5%;
 }
+.return-container {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+}
+
 
 .categoria {
     padding: 2rem;
     text-align: center;
-    background: linear-gradient(to bottom, #fff8f0, #ed9db2);
 }
 
 /* Título de la categoría */
@@ -771,17 +789,37 @@ body {
 }
 
 .card-new-image:hover {
-    background-color: #f0f0f0;
+    background-color: #39d6d6;
 }
 
 .plus-sign {
     font-size: 5rem;
     color: #7adf7a;
 }
+.page-title {
+    margin-top: 100px;
+    text-align: center;
+
+}
 /*FORMULARIO FORM*/
+.form-row {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+.form-row .campo-formulario {
+    flex: 1;
+    max-width: 48%;
+}
+
+.form-row.solo-boton {
+    justify-content: center;
+    margin-top: 2rem;
+}
 .form-magico {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 1100px;
+    margin: 2rem auto;
     padding: 2rem;
     background: #f9f9f9;
     border-radius: 12px;
@@ -791,15 +829,24 @@ body {
 .campo-formulario {
     margin-bottom: 1.5rem;
 }
-
 .input-con-icono {
     display: flex;
     align-items: center;
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 0.5rem;
+    padding: 0.4rem 0.6rem;
 }
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-row .campo-formulario {
+        max-width: 100%;
+    }
+}
+
 
 .input-con-icono .icono {
     font-size: 1.5rem;
@@ -870,9 +917,10 @@ button.btn:hover {
 /*FORM-ARTIST*/
 .form-artist {
     max-width: 500px;
-    margin: 10rem auto;
+    margin-top: 5rem;
+    margin-left: 41.5rem;
     padding: 2rem;
-    background-color: #b4efef;
+    background-color: #edf4f4;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0,0,0,0.15);
     font-family: 'Poppins', sans-serif;
@@ -933,10 +981,9 @@ button.btn:hover {
     color: white;
     border-radius: 10px;
     text-decoration: none;
-    width: 5%;
-    height: 2%;
+    width: 10%;
+    height: 3%;
     padding: 0.6rem;
-    margin-left: 10%;
 }
 /*BOTONES EDITAR ELIMINAR ARTISTA*/
 .btn-admin-action {
@@ -951,6 +998,7 @@ button.btn:hover {
     cursor: pointer;
     margin-bottom: 10px;
     transition: background-color 0.3s ease;
+
 }
 
 .btn-edit {
@@ -972,6 +1020,19 @@ button.btn:hover {
 .btn-admin-action i {
     margin-right: 8px;
 }
+.admin-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.admin-buttons form {
+    margin: 0;
+}
+
+
 /*BOTONES EDITAR ELIMINAR CATEGORIA IMAGEN*/
 .acciones-imagen {
     display: flex;
@@ -1008,6 +1069,130 @@ button.btn:hover {
 
 .acciones-imagen .btn-delete:hover {
     background-color: #e04c4c;
+}
+/* SUBCATEGORIAS */
+.grid-subcategorias {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding: 1rem;
+
+}
+
+.card-subcategoria {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 260px;
+    height: 400px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-subcategoria:hover {
+    transform: translateY(-6px);
+}
+
+.card-subcategoria img {
+    width: 100%;
+    height: 310px;
+    object-fit: cover;
+    object-position: center;
+    border-bottom: 1px solid #eee;
+}
+
+.card-subcategoria h3 {
+    margin: 1rem 0;
+    font-size: 1.6rem;
+    color: #222;
+}
+.subcategorias-section{
+    padding-top: 5rem;
+    text-align: center;
+    font-family: 'WallDisplay', cursive;
+    font-size: 2rem;
+    color: #9eea1d;
+
+}
+/*form edit artista*/
+.edit-artist-section {
+    padding: 7rem;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(to bottom, #fce4ec, #f8bbd0);
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.input, .textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+#preview-container {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+#preview-image {
+    max-width: 200px;
+    border-radius: 10px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.save-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.back-btn {
+    background-color: #2196f3;
+    color: white;
 }
 
 
