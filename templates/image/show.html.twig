@@ -44,8 +44,8 @@
                 <a href="{{ path('app_artista_show', {'id': artist.id}) }}" class="return-btn">← Volver al artista</a>
             {% elseif from == 'category' and slug is not empty %}
                 <a href="{{ path('app_categoria_show', {'slug': slug}) }}" class="return-btn">← Volver a la categoría</a>
-            {% elseif from == 'subcategoria' and slug is not empty %}
-                <a href="{{ path('app_subcategoria_show', {'id': slug}) }}" class="return-btn">← Volver a la subcategoría</a>
+            {% elseif from == 'subcategoria' and subcategoria is defined %}
+                <a href="{{ path('app_subcategoria_show', {'id': subcategoria.id}) }}" class="return-btn">← Volver a {{ subcategoria.name }}</a>
             {% else %}
                 <a href="{{ path('app_home') }}" class="return-btn">← Volver al inicio</a>
             {% endif %}
