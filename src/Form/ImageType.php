@@ -23,7 +23,7 @@ class ImageType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'label' => 'Sube tu imagen',
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,

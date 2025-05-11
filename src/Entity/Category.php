@@ -28,11 +28,6 @@ class Category
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'category')]
     private Collection $images;
 
-    /**
-     * @var Collection<int, Video>
-     */
-    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'category')]
-    private Collection $videos;
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Subcategory::class)]
     private Collection $subCategories;
 
@@ -114,35 +109,7 @@ class Category
         return $this;
     }
 
-    /**
-     * @return Collection<int, Video>
-     */
-    public function getVideos(): Collection
-    {
-        return $this->videos;
-    }
 
-    public function addVideo(Video $video): static
-    {
-        if (!$this->videos->contains($video)) {
-            $this->videos->add($video);
-            $video->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVideo(Video $video): static
-    {
-        if ($this->videos->removeElement($video)) {
-            // set the owning side to null (unless already changed)
-            if ($video->getCategory() === $this) {
-                $video->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
     public function getSubcategories(): Collection
     {
         return $this->subCategories;
