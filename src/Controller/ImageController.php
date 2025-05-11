@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
+
 
 #[Route('/image')]
 final class ImageController extends AbstractController
@@ -59,6 +61,10 @@ final class ImageController extends AbstractController
                 $image->setSubCategory($subcategoria);
             }
 
+            foreach ($image->getTags() as $tag) {
+                $tag->addImage($image);
+            }
+
             $entityManager->persist($image);
             $entityManager->flush();
 
@@ -78,16 +84,23 @@ final class ImageController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_image_show', methods: ['GET'])]
-    public function show(Request $request, Image $image, SubcategoryRepository $subRepo): Response
+    public function show(Request $request, Image $image, SubcategoryRepository $subRepo, TagRepository $tagRepo): Response
     {
         $from = $request->query->get('from');
         $slug = $request->query->get('slug');
         $artist = $image->getArtist();
+
         $subcategoria = null;
+        $tag = null;
 
         if ($from === 'subcategoria' && $slug) {
             $subcategoria = $subRepo->find($slug);
         }
+
+        if ($from === 'tag' && $slug) {
+            $tag = $tagRepo->findOneBy(['slug' => $slug]);
+        }
+
 
         return $this->render('image/show.html.twig', [
             'image' => $image,
@@ -95,6 +108,7 @@ final class ImageController extends AbstractController
             'slug' => $slug,
             'artist' => $artist,
             'subcategoria' => $subcategoria,
+            'tag' => $tag,
         ]);
     }
 
@@ -134,20 +148,28 @@ final class ImageController extends AbstractController
         }
 
         $slug = $request->request->get('slug');
+        $from = $request->request->get('from');
 
-        if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->request->get('_token'))) {
             $entityManager->remove($image);
             $entityManager->flush();
         }
 
-        if (!$slug) {
-            return $this->redirectToRoute('app_home');
+        if ($from === 'subcategoria' && $slug) {
+            return $this->redirectToRoute('app_subcategoria_show', [
+                'id' => $slug,
+            ]);
         }
 
-        return $this->redirectToRoute('app_categoria_show', [
-            'slug' => $slug,
-        ], Response::HTTP_SEE_OTHER);
+        if ($from === 'category' && $slug) {
+            return $this->redirectToRoute('app_categoria_show', [
+                'slug' => $slug,
+            ]);
+        }
+
+        return $this->redirectToRoute('app_home');
     }
+
 
 
     #[Route('/image/{id}/like', name: 'app_image_like', methods: ['POST'])]
