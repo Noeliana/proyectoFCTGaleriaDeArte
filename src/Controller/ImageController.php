@@ -61,6 +61,10 @@ final class ImageController extends AbstractController
                 $image->setSubCategory($subcategoria);
             }
 
+            foreach ($image->getTags() as $tag) {
+                $tag->addImage($image);
+            }
+
             $entityManager->persist($image);
             $entityManager->flush();
 
