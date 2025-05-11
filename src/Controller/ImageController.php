@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Image;
 use App\Form\ImageType;
 use App\Repository\ImageRepository;
+use App\Repository\SubcategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,65 +17,87 @@ use App\Repository\CategoryRepository;
 final class ImageController extends AbstractController
 {
     #[Route('/new', name: 'app_image_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,  CategoryRepository $categoryRepository): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        CategoryRepository $categoryRepository,
+        SubcategoryRepository $subRepo
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
+
         $categoryId = $request->query->get('categoryId');
+        $subcategoriaId = $request->query->get('subcategoriaId');
+
         $category = $categoryRepository->find($categoryId);
+        $subcategoria = $subcategoriaId ? $subRepo->find($subcategoriaId) : null;
+
+        if (!$category) {
+            throw $this->createNotFoundException('Categoría no encontrada');
+        }
+
         $image = new Image();
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('imageFile')->getData();
 
             if ($uploadedFile) {
-                $newFilename = uniqid().'.'.$uploadedFile->guessExtension();
+                $newFilename = uniqid() . '.' . $uploadedFile->guessExtension();
                 $uploadedFile->move(
                     $this->getParameter('images_directory'),
                     $newFilename
                 );
-
                 $image->setImageFile($newFilename);
             }
 
             $image->setOwner($this->getUser());
             $image->setCreatedAt(new \DateTimeImmutable());
+            $image->setCategory($category);
+
+            if ($subcategoria) {
+                $image->setSubCategory($subcategoria);
+            }
 
             $entityManager->persist($image);
             $entityManager->flush();
-            $imageId = $image->getId();
 
             return $this->redirectToRoute('app_image_show', [
                 'id' => $image->getId(),
-                'from' => 'category',
-                'slug' => $category->getSlug(),
+                'from' => $subcategoria ? 'subcategoria' : 'category',
+                'slug' => $subcategoria ? $subcategoria->getId() : $category->getSlug(),
             ], Response::HTTP_SEE_OTHER);
-
         }
 
         return $this->render('image/new.html.twig', [
             'image' => $image,
             'form' => $form,
             'category' => $category,
+            'subcategoria' => $subcategoria,
         ]);
     }
 
     #[Route('/{id}', name: 'app_image_show', methods: ['GET'])]
-    public function show(Request $request, Image $image): Response
+    public function show(Request $request, Image $image, SubcategoryRepository $subRepo): Response
     {
         $from = $request->query->get('from');
         $slug = $request->query->get('slug');
         $artist = $image->getArtist();
+        $subcategoria = null;
+
+        if ($from === 'subcategoria' && $slug) {
+            $subcategoria = $subRepo->find($slug);
+        }
 
         return $this->render('image/show.html.twig', [
             'image' => $image,
             'from' => $from,
             'slug' => $slug,
             'artist' => $artist,
+            'subcategoria' => $subcategoria,
         ]);
     }
+
     #[Route('/{id}/edit', name: 'app_image_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Image $image, EntityManagerInterface $entityManager): Response
     {

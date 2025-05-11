@@ -43,13 +43,22 @@
 
                 {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                     <div class="card-new-image">
-                        <a href="{{ path('app_image_new', {'categoryId': category.id}) }}">
-                            <div class="plus-sign">+</div>
+                        <a href="{{ path('app_image_new', {
+                            'categoryId': category.id,
+                            'subcategoriaId': subcategoria is defined ? subcategoria.id : null
+                        }) }}">
+                        <div class="plus-sign">+</div>
                             <p>Add image</p>
                         </a>
                     </div>
                 {% endif %}
+
             </div>
+        {% endif %}
+        {% if subcategoria is defined %}
+            <a href="{{ path('app_categoria_subcategorias', {'slug': subcategoria.category.slug}) }}" class="return-btn-subcategorias">
+                ← Ver todas las subcategorías de {{ subcategoria.category.name }}
+            </a>
         {% endif %}
     </section>
 {% endblock %}
