@@ -43,16 +43,20 @@ final class TagController extends AbstractController
     }
 
     #[Route('/tag/{slug}', name: 'app_tag_show')]
-    public function show(Tag $tag): Response
+    public function show(TagRepository $tagRepository, string $slug): Response
     {
-        // gracias al ParamConverter, Symfony cargará el tag por su "slug"
-        $images = $tag->getImages();
+        $tag = $tagRepository->findOneBy(['slug' => $slug]);
+
+        if (!$tag) {
+            throw $this->createNotFoundException('Etiqueta no encontrada');
+        }
 
         return $this->render('tag/show.html.twig', [
             'tag' => $tag,
-            'images' => $images,
+            'images' => $tag->getImages(),
         ]);
     }
+
 
     #[Route('/{id}/edit', name: 'app_tag_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response

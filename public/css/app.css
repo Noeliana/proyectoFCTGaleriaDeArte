@@ -673,6 +673,7 @@ body {
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    padding-top: 3rem;
 }
 
 /* Cada tarjeta de imagen */
@@ -1215,6 +1216,18 @@ button.btn:hover {
 .return-btn-subcategorias:hover {
     background-color: #6bdede;
 }
+/*TAGS IMAGENES*/
+
+.tags h2{
+    margin-top: 7rem;
+    text-align: center;
+    font-family: 'WallDisplay', cursive;
+    color: #9eea1d;
+    font-size: 3.5rem;
+
+}
+
+
 
 
 

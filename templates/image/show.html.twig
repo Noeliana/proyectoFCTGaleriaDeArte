@@ -46,6 +46,8 @@
                 <a href="{{ path('app_categoria_show', {'slug': slug}) }}" class="return-btn">← Volver a la categoría</a>
             {% elseif from == 'subcategoria' and subcategoria is defined %}
                 <a href="{{ path('app_subcategoria_show', {'id': subcategoria.id}) }}" class="return-btn">← Volver a {{ subcategoria.name }}</a>
+            {% elseif from == 'tag' and tag is defined %}
+                <a href="{{ path('app_tag_show', {'slug': tag.slug}) }}" class="return-btn">← Volver a etiqueta "{{ tag.name }}"</a>
             {% else %}
                 <a href="{{ path('app_home') }}" class="return-btn">← Volver al inicio</a>
             {% endif %}
