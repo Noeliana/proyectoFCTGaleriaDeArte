@@ -180,6 +180,13 @@ final class ImageController extends AbstractController
             ]);
         }
 
+        if ($from === 'artist') {
+            return $this->redirectToRoute('app_artista_show', [
+                'id' => $image->getArtist()->getId(),
+            ]);
+        }
+
+
         return $this->redirectToRoute('app_home');
     }
 

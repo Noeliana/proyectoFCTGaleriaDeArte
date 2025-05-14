@@ -27,7 +27,6 @@
                 <h2>{{ image.title }}</h2>
                 <p><strong>Descripción:</strong> {{ image.description }}</p>
                 <p><strong>Creado el:</strong> {{ image.createdAt|date('Y-m-d H:i') }}</p>
-                <p><strong>Destacado:</strong> {{ image.isFeatured ? 'Sí' : 'No' }}</p>
 
                 <p><strong>Etiquetas:</strong>
                     {% for tag in image.tags %}

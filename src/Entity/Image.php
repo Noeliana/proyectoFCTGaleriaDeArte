@@ -32,9 +32,6 @@ class Image
     #[ORM\Column(nullable: true)]
     private ?int $likes = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isFeatured = null;
-
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Category $category = null;
 
@@ -44,6 +41,8 @@ class Image
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?subcategory $subCategory = null;
+
+
     public function getOwner(): ?User
     {
         return $this->owner;
@@ -130,18 +129,6 @@ class Image
     public function setLikes(?int $likes): static
     {
         $this->likes = $likes;
-
-        return $this;
-    }
-
-    public function isFeatured(): ?bool
-    {
-        return $this->isFeatured;
-    }
-
-    public function setIsFeatured(?bool $isFeatured): static
-    {
-        $this->isFeatured = $isFeatured;
 
         return $this;
     }

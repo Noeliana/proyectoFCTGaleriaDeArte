@@ -13,13 +13,26 @@
             <h3>Obras de {{ artist.name }}</h3>
             <div class="galeria-obras">
                 {% for image in artist.images %}
-                    <a href="{{ path('app_image_show', {
-                        'id': image.id,
-                        'from': 'artist'
-                    }) }}">
-
-                    <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="Imagen de {{ artist.name }}">
-                    </a>
+                    <div class="imagen-contenedor" style="position: relative; display: inline-block;">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <form method="post"
+                                  action="{{ path('app_image_delete', {'id': image.id}) }}"
+                                  onsubmit="return confirm('¿Seguro que quieres eliminar esta imagen?');"
+                                  style="position: absolute; top: 5px; right: 5px;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
+                                <input type="hidden" name="from" value="artist">
+                                <button type="submit"
+                                        style="background: white; border: none; border-radius: 50%; width: 25px; height: 25px;
+                                   color: red; font-weight: bold; line-height: 1; text-align: center; padding: 0;
+                                   box-shadow: 0 0 2px rgba(0,0,0,0.2); cursor: pointer;">
+                                    &minus;
+                                </button>
+                            </form>
+                        {% endif %}
+                        <a href="{{ path('app_image_show', {'id': image.id, 'from': 'artist'}) }}">
+                            <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="Imagen de {{ artist.name }}">
+                        </a>
+                    </div>
                 {% endfor %}
             </div>
         {% else %}
