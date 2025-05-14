@@ -5,8 +5,19 @@
 {% block body %}
     <h1>Edit Image</h1>
 
-    {{ include('image/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('image/_form.html.twig', {
+        form: form,
+        button_label: 'Update',
+        image: image
+    }) }}
 
-    <a href="{{ path('app_categoria_show' , {'slug': category.slug}) }}" class="return-btn">Volver</a>
+    <div class="return-container">
+        {% if from == 'subcategoria' and subcategoria is defined %}
+            <a href="{{ path('app_subcategoria_show', {'id': subcategoria.id}) }}" class="return-btn">← Volver a {{ subcategoria.name }}</a>
+        {% else %}
+            <a href="{{ path('app_categoria_show', {'slug': category.slug}) }}" class="return-btn">← Volver a {{ category.name }}</a>
+        {% endif %}
+    </div>
+
 
 {% endblock %}

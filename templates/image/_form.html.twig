@@ -1,4 +1,29 @@
 {{ form_start(form, {'attr': {'class': 'form-magico'}}) }}
+
+<div class="form-row">
+    <div class="campo-formulario">
+        <label>{{ form_label(form.imageFile) }}</label>
+        {% if image.imageFile %}
+            <div style="margin-top: 10px;">
+                <p>Imagen actual:</p>
+                <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="Imagen actual" style="max-width: 200px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.2);">
+            </div>
+        {% endif %}
+
+        <div class="input-con-icono">
+            <span class="icono">📁</span>
+            {{ form_widget(form.imageFile) }}
+        </div>
+    </div>
+
+    <div class="campo-formulario">
+        <label>{{ form_label(form.category) }}</label>
+        <div class="input-con-icono">
+            <span class="icono">📂</span>
+            {{ form_widget(form.category) }}
+        </div>
+    </div>
+</div>
 <div class="form-row">
     <div class="campo-formulario">
         <label>{{ form_label(form.title) }}</label>
@@ -13,24 +38,6 @@
         <div class="input-con-icono">
             <span class="icono">📝</span>
             {{ form_widget(form.description) }}
-        </div>
-    </div>
-</div>
-
-<div class="form-row">
-    <div class="campo-formulario">
-        <label>{{ form_label(form.imageFile) }}</label>
-        <div class="input-con-icono">
-            <span class="icono">📁</span>
-            {{ form_widget(form.imageFile) }}
-        </div>
-    </div>
-
-    <div class="campo-formulario">
-        <label>{{ form_label(form.category) }}</label>
-        <div class="input-con-icono">
-            <span class="icono">📂</span>
-            {{ form_widget(form.category) }}
         </div>
     </div>
 </div>

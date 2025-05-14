@@ -28,7 +28,7 @@
     <section class="suscripcion">
         <h2>¡No te pierdas nada!</h2>
         <p>Suscríbete para recibir novedades de tus personajes favoritos.</p>
-        <form method="post" action="#">
+        <form method="post" action="{{ path('app_newsletter_subscribe') }}">
             <input type="email" name="email" placeholder="Tu correo electrónico" required>
             <button type="submit">Suscribirme</button>
         </form>

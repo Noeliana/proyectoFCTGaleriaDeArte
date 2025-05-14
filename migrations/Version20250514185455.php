@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250426201321 extends AbstractMigration
+final class Version20250514185455 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,13 +21,13 @@ final class Version20250426201321 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE image ADD owner_id INT DEFAULT NULL
+            ALTER TABLE artist ADD CONSTRAINT FK_1599687A76ED395 FOREIGN KEY (user_id) REFERENCES `user` (id)
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE image ADD CONSTRAINT FK_C53D045F7E3C61F9 FOREIGN KEY (owner_id) REFERENCES `user` (id)
+            CREATE INDEX IDX_1599687A76ED395 ON artist (user_id)
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE INDEX IDX_C53D045F7E3C61F9 ON image (owner_id)
+            ALTER TABLE image CHANGE is_featured is_featured TINYINT(1) NOT NULL
         SQL);
     }
 
@@ -35,13 +35,13 @@ final class Version20250426201321 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE image DROP FOREIGN KEY FK_C53D045F7E3C61F9
+            ALTER TABLE artist DROP FOREIGN KEY FK_1599687A76ED395
         SQL);
         $this->addSql(<<<'SQL'
-            DROP INDEX IDX_C53D045F7E3C61F9 ON image
+            DROP INDEX IDX_1599687A76ED395 ON artist
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE image DROP owner_id
+            ALTER TABLE image CHANGE is_featured is_featured TINYINT(1) DEFAULT NULL
         SQL);
     }
 }

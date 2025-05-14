@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use App\Repository\ArtistRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
+
 
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
 class Artist
@@ -20,10 +23,11 @@ class Artist
     private ?string $image = null;
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $user = null;
     #[ORM\Column(type: Types::TEXT, length: 1000)]
     private ?string $bio = null;
-
     #[ORM\ManyToOne(inversedBy: 'images')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: true)]
     private ?Artist $artist = null;
@@ -114,4 +118,15 @@ class Artist
 
         return $this;
     }
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
 }

@@ -21,8 +21,18 @@
                         <a href="{{ path('app_categoria_subcategorias', {'slug': 'live-action'}) }}">Live-Action</a>
                     </div>
                 </div>
+                <form method="get" action="{{ path('app_search') }}" class="search-form">
+                    <input type="text" name="q" placeholder="Buscar...">
 
-                <a href="{{ path('app_video_index') }}">Videos</a>
+                    <select name="tag">
+                        <option value="">Tags</option>
+                        {% for tag in tags %}
+                            <option value="{{ tag.slug }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit">🔍</button>
+                </form>
             </div>
 
             <div class="right-zone">
@@ -33,7 +43,6 @@
                         <a href="{{ path('app_logout') }}">Cerrar sesion</a>
                     </div>
                 </div>
-
                 <form method="post" action="{{ path('app_change_language') }}" class="lang-form">
                     <button type="submit" name="lang" value="es">ES</button>
                     <button type="submit" name="lang" value="en">EN</button>

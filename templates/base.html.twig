@@ -14,7 +14,12 @@
     {% include 'partials/_header.html.twig' %}
 
     <main class="content">
-        {% block body %}{% endblock %}
+        {% block body %}{% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        {% endblock %}
     </main>
 
     {% include 'partials/_footer.html.twig' %}

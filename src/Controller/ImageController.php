@@ -113,32 +113,45 @@ final class ImageController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_image_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Image $image, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Image $image, EntityManagerInterface $entityManager, CategoryRepository $categoryRepo, SubcategoryRepository $subRepo): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && $image->getOwner() !== $this->getUser()) {
             throw $this->createAccessDeniedException('No tienes permiso para editar esta imagen.');
         }
+
         $category = $image->getCategory();
+
+        $from = $request->query->get('from');
+        $slug = $request->query->get('slug');
+
+        $subcategoria = null;
+        if ($from === 'subcategoria' && $slug) {
+            $subcategoria = $subRepo->find($slug);
+        }
 
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
             return $this->redirectToRoute('app_image_show', [
                 'id' => $image->getId(),
-                'from' => 'category',
-                'slug' => $image->getCategory() ? $image->getCategory()->getSlug() : null,
+                'from' => $from,
+                'slug' => $slug,
             ]);
-
         }
 
         return $this->render('image/edit.html.twig', [
             'image' => $image,
             'form' => $form,
             'category' => $category,
+            'subcategoria' => $subcategoria,
+            'from' => $from,
+            'slug' => $slug,
         ]);
     }
+
 
     #[Route('/{id}/delete', name: 'app_image_delete', methods: ['POST'])]
     public function delete(Request $request, Image $image, EntityManagerInterface $entityManager): Response
@@ -166,6 +179,13 @@ final class ImageController extends AbstractController
                 'slug' => $slug,
             ]);
         }
+
+        if ($from === 'artist') {
+            return $this->redirectToRoute('app_artista_show', [
+                'id' => $image->getArtist()->getId(),
+            ]);
+        }
+
 
         return $this->redirectToRoute('app_home');
     }
