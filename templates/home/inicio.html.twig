@@ -19,19 +19,18 @@
         <h2>Destacadas Disney</h2>
         <div class="galeria">
             {% for image in topImages %}
-                <a href="{{ path('app_image_show', {'id': image.id}) }}">
-                    <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}">
-                </a>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ path('app_image_show', {'id': image.id}) }}">
+                        <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}">
+                    </a>
+                {% else %}
+                    <div class="imagen-bloqueada">
+                        <img src="{{ asset('images/obras/' ~ image.imageFile) }}" alt="{{ image.title }}">
+                        <div class="overlay">🔒 Inicia sesión para ver</div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
-    </section>
-    <section class="suscripcion">
-        <h2>¡No te pierdas nada!</h2>
-        <p>Suscríbete para recibir novedades de tus personajes favoritos.</p>
-        <form method="post" action="{{ path('app_newsletter_subscribe') }}">
-            <input type="email" name="email" placeholder="Tu correo electrónico" required>
-            <button type="submit">Suscribirme</button>
-        </form>
     </section>
 
 {% endblock %}
